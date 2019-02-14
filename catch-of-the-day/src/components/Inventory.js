@@ -4,9 +4,9 @@ import AddFishForm from './AddFishForm';
 class Inventory extends Component {
     render() {
         return (
-            <div className="inventory">
-                <h1>Inventory!!!</h1>
-                <AddFishForm/>
+            <div className="inventor">
+                <h1>Inventoryj!!!</h1>
+                <AddFishForm addFish={this.props.addFish}/>
             </div>
         )
     }

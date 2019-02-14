@@ -5,6 +5,19 @@ import Order from './Order';
 
 
 class App extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            fishes: {},
+            order: {}
+        }
+    }
+
+    addFish = () => {
+        console.log('We are adding the Fish here')
+    }
+
 
     render() {
         return (
@@ -13,7 +26,7 @@ class App extends Component {
                     <Header tagline="Fresh Seafood Market"/>
                 </div>
                     <Order/>
-                    <Inventory/>
+                    <Inventory addFish={this.addFish}/>
             </div>
         )
     }
