@@ -19,14 +19,27 @@ class App extends Component {
 
     componentDidMount() {
         const { params } = this.props.match
+        const localStorageRef = localStorage.getItem(params.storeId);
+        if (localStorageRef) {
+            this.setState({ order: JSON.parse(localStorageRef) });
+        }
         this.ref = base.syncState(`${params.storeId}/fishes`, {
             //reference to the piece of data in the firebase; sync the base with the name of the store; / allows you to go deeper to the object
-            context: this, 
+            context: this,
             state: 'fishes'
-        }) 
+        })
     }
 
-    componentWillUnmount(){
+    componentDidUpdate() {
+        console.log('did it get updated?')
+        localStorage.setItem(
+            this.props.match.params.storeId,
+            JSON.stringify(this.state.order)
+        );
+    }
+
+
+    componentWillUnmount() {
         base.removeBinding(this.ref);
         // console.log('unmounting!!!!')
     }
@@ -49,10 +62,17 @@ class App extends Component {
 
     addToOrder = (key) => {
         const order = { ...this.state.order };
-        order[key] = order[key] + 1 || 1; 
-        this.setState({order}) 
+        order[key] = order[key] + 1 || 1;
+        this.setState({ order });
     }
 
+    updateFish = (key, updateFish) => {
+        const fishes = { ...this.state.fishes};
+        fishes[key] = updateFish;
+        this.setState({
+            fishes
+        })
+    }
 
     render() {
         return (
@@ -68,7 +88,7 @@ class App extends Component {
                     </ul>
                 </div>
                 <Order fishes={this.state.fishes} order={this.state.order} />
-                <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} />
+                <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} fishes={this.state.fishes} updateFish={this.updateFish} />
             </div>
         )
     }

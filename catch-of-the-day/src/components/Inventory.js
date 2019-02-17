@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import AddFishForm from './AddFishForm';
+import EditFishForm from './EditFishForm';
 
 class Inventory extends Component {
     render() {
+        console.log('what props are in here?', this.props)
         return (
             <div className="inventory">
-                <h1>Inventoryj!!!</h1>
+                <h1>Inventory!!!</h1>
+                {Object.keys(this.props.fishes).map( (key) => <EditFishForm key={key} index={key} fish={this.props.fishes[key]} updateFish={this.props.updateFish}/>)}
                 <AddFishForm addFish={this.props.addFish}/>
                 <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
             </div>
